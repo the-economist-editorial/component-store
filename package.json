@@ -24,7 +24,7 @@
   },
   "scripts": {
     "lint": "eslint $npm_package_config_lint_opts .",
-    "prepublish": "babel index.es6 --stage=0 --loose > index.js",
+    "prepublish": "babel index.es6 --source-maps=inline --stage=0 --loose > index.js",
     "test": "npm run test:base -- -R tap",
     "test:base": "mocha -r babel/register -r @economist/component-testharness",
     "test:watch": "npm run test:base -- -wR min"
