@@ -1,6 +1,4 @@
-import isofetch from 'isomorphic-fetch';
-// This hack is needed because native fetch doesn't like being called with context
-const fetch = isofetch;
+import fetch from 'isomorphic-fetch';
 export default class Store {
 
   constructor(url) {
