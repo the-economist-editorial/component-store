@@ -1,13 +1,9 @@
-import fetch from 'isomorphic-fetch';
 export default class Store {
 
   constructor(url) {
     this.url = url;
     if (!this.entities) {
       Object.defineProperty(this, 'entities', { value: {} });
-    }
-    if (!this.includedStores) {
-      Object.defineProperty(this, 'includedStores', { value: {} });
     }
   }
 
@@ -25,40 +21,6 @@ export default class Store {
 
   getWhere(filterFunction) {
     return this.getAll().filter(filterFunction);
-  }
-
-  fetch(id) {
-    if (this.entities[id]) {
-      return new Promise((resolve) => resolve(this.entities[id]));
-    }
-    return this.fetchAll().then(() => this.entities[id]);
-  }
-
-  fetchAll() {
-    const excluded = Object.keys(this.entities).map(id => `exclude[]=${id}`).join('&');
-    return fetch(`${this.url}?${excluded}`)
-      .then(response => response.json())
-      .then((response) => {
-        for (const entity of response.data) {
-          this.add(entity);
-        }
-        if (response.included) {
-          this.addIncludedData(response.included);
-        }
-      })
-      .then(() => this.entities);
-  }
-
-  addIncludedData(included) {
-    included.forEach((entity) => {
-      if (this.includedStores[entity.type]) {
-        this.includedStores[entity.type].add(entity);
-      }
-    });
-  }
-
-  registerIncludedStore(store, relationshipName) {
-    this.includedStores[relationshipName] = store;
   }
 
 }

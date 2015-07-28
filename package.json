@@ -30,7 +30,6 @@
     "test:watch": "npm run test:base -- -wR min"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.1.1",
     "react": "^0.13.3"
   },
   "devDependencies": {
